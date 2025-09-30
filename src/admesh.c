@@ -479,6 +479,7 @@ usage(int status, char *program_name) {
     printf("\n");
     printf("ADMesh version " VERSION "\n");
     printf("Copyright (C) 1995, 1996  Anthony D. Martin\n");
+    printf("Enhanced by Stephen Riley\n");
     printf("Usage: %s [OPTION]... file\n", program_name);
     printf("\n");
     printf("     --x-rotate=angle     Rotate CCW about x-axis by angle degrees\n");
