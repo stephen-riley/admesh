@@ -206,13 +206,32 @@ stl_scale_versor(stl_file *stl, float versor[3]) {
     }
   }
 
+  
   stl_invalidate_shared_vertices(stl);
 
   /* recalculate surface area */
   if (stl->stats.surface_area > 0.0) {
     stl_calculate_surface_area(stl);
   }
+}
 
+void
+stl_fit_versor(stl_file *stl, float bounds[3]) {
+  int i;
+  int j;
+
+  if (stl->error) return;
+
+  float x_abs = fabs(stl->stats.max.x - stl->stats.min.x);
+  float y_abs = fabs(stl->stats.max.y - stl->stats.min.y);
+  float z_abs = fabs(stl->stats.max.z - stl->stats.min.z);
+
+  float factors[3];
+  factors[0] = bounds[0] / x_abs;
+  factors[1] = bounds[1] / y_abs;
+  factors[2] = bounds[2] / z_abs;
+
+  stl_scale_versor(stl, factors);
 }
 
 void

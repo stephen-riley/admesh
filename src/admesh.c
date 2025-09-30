@@ -39,6 +39,7 @@ main(int argc, char **argv) {
   float    y_trans;
   float    z_trans;
   float    scale_versor[3];
+  float    fit_versor[3];
   float    scale_factor = 0;
   float    rotate_x_angle = 0;
   float    rotate_y_angle = 0;
@@ -79,6 +80,7 @@ main(int argc, char **argv) {
   int      translate_rel_flag = 0;
   int      stretch_flag = 0;
   int      scale_versor_flag = 0;
+  int      fit_versor_flag = 0;
   int      scale_flag = 0;
   int      rotate_x_flag = 0;
   int      rotate_y_flag = 0;
@@ -98,7 +100,8 @@ main(int argc, char **argv) {
 
   enum {rotate_x = 1000, rotate_y, rotate_z, merge, help, version,
         mirror_xy, mirror_yz, mirror_xz, scale, translate, translate_rel,
-        stretch, reverse_all, off_file, dxf_file, vrml_file, scale_xyz
+        stretch, reverse_all, off_file, dxf_file, vrml_file, scale_xyz,
+        fit_xyz
        };
 
   struct option long_options[] = {
@@ -123,6 +126,7 @@ main(int argc, char **argv) {
     {"stretch",            required_argument, NULL, stretch},
     {"scale",              required_argument, NULL, scale},
     {"scale-xyz",          required_argument, NULL, scale_xyz},
+    {"fit-xyz",            required_argument, NULL, fit_xyz},
     {"x-rotate",           required_argument, NULL, rotate_x},
     {"y-rotate",           required_argument, NULL, rotate_y},
     {"z-rotate",           required_argument, NULL, rotate_z},
@@ -266,6 +270,10 @@ main(int argc, char **argv) {
       scale_versor_flag = 1;
       sscanf(optarg, "%f,%f,%f", &scale_versor[0], &scale_versor[1], &scale_versor[2]);
       break;
+    case fit_xyz:
+      fit_versor_flag = 1;
+      sscanf(optarg, "%f,%f,%f", &fit_versor[0], &fit_versor[1], &fit_versor[2]);
+      break;
     case rotate_x:
       rotate_x_flag = 1;
       rotate_x_angle = atof(optarg);
@@ -361,6 +369,10 @@ redistribute it under certain conditions.  See the file COPYING for details.\n")
   if(scale_versor_flag) {
     printf("Scaling by %f %f %f...\n", scale_versor[0], scale_versor[1], scale_versor[2]);
     stl_scale_versor(&stl_in, scale_versor);
+  }
+  if(fit_versor_flag) {
+    printf("Fitting to %f %f %f...\n", fit_versor[0], fit_versor[1], fit_versor[2]);
+    stl_fit_versor(&stl_in, fit_versor);
   }
   if(translate_flag) {
     printf("Translating to %f, %f, %f ...\n", x_trans, y_trans, z_trans);
@@ -477,6 +489,7 @@ usage(int status, char *program_name) {
     printf("     --xz-mirror          Mirror about the xz plane\n");
     printf("     --scale=factor       Scale the file by factor (multiply by factor)\n");
     printf("     --scale-xyz=x,y,z    Scale the file by a non uniform factor\n");
+    printf("     --fit-xyz=x,y,z      Scale the file to fit the dimensions x by y by z\n");
     printf("     --translate=x,y,z    Translate the file to x, y, and z\n");
     printf("     --translate-rel=x,y,z     Translate the file by x, y, and z\n");
     printf("     --stretch=xmin:xmax:x,ymin:ymax:y,zmin:zmax:z     Translate the file by x, y, z but only within the given bounding box\n");

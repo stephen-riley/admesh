@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/admesh",
+            "args": [
+                "--z-rotate",
+                "270",
+                "--fit-xyz",
+                "150,85,5",
+                "afiril_final_0_0.stl",
+                "-b",
+                "out.stl"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/../../sand-writing-gimp/afiril/afiril_final",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
+    ]
+}
